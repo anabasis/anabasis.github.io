@@ -6,7 +6,8 @@
 ._*
 
 # Custom folder icons
-Icon
+Icon
+
 
 # Volume root files
 .DocumentRevisions-V100
@@ -62,4 +63,4 @@ out/
 .yarn/install-state.gz
 .pnp.*
 
-themes/
+public/

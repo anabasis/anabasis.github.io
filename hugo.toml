@@ -1,4 +1,12 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'https://anabasis.github.io'
+locale = 'ko-kr'
+title = 'CaptainSnail 기술 블로그'
 theme = "PaperMod"
+#theme = "hugo-theme-stack"
+#theme = "hugo-coder"
+#theme = "LoveIt"
+#theme = "docsy"
+#theme = "ananke"
+
+[params]
+author = "JunSeung Cho"
