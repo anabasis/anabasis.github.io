@@ -1,0 +1,22 @@
+<a id="back-to-top" href="#top" aria-label="맨 위로">↑</a>
+
+<script>
+(function () {
+  var bar = document.createElement('div');
+  bar.id = 'reading-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.prepend(bar);
+
+  var btn = document.getElementById('back-to-top');
+
+  function onScroll() {
+    var scrolled = window.scrollY;
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+    if (btn) btn.classList.toggle('visible', scrolled > 300);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

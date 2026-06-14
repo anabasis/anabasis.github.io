@@ -10,3 +10,12 @@ theme = "PaperMod"
 
 [params]
 author = "JunSeung Cho"
+DateFormat = "2006년 01월 02일"
+defaultTheme = "auto"
+ShowReadingTime = true
+ShowWordCount = true
+ShowBreadCrumbs = true
+ShowPostNavLinks = true
+ShowCodeCopyButtons = true
+ShowToc = true
+TocOpen = true
