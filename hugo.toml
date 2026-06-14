@@ -19,3 +19,4 @@ ShowPostNavLinks = true
 ShowCodeCopyButtons = true
 ShowToc = true
 TocOpen = true
+disableScrollToTop = true
