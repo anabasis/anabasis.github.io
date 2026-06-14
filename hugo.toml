@@ -8,6 +8,10 @@ theme = "PaperMod"
 #theme = "docsy"
 #theme = "ananke"
 
+# 검색 기능을 위한 JSON 출력 추가
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
 [params]
 author = "JunSeung Cho"
 DateFormat = "2006년 01월 02일"
@@ -20,3 +24,52 @@ ShowCodeCopyButtons = true
 ShowToc = true
 TocOpen = true
 disableScrollToTop = true
+
+# 홈 상단 히어로 섹션
+[params.homeInfoParams]
+Title = "안녕하세요, CaptainSnail입니다 👋"
+Content = "개발·인프라·오픈소스에 대한 경험과 생각을 씁니다."
+
+# 소셜 아이콘
+[[params.socialIcons]]
+name = "github"
+url  = "https://github.com/anabasis"
+
+[[params.socialIcons]]
+name = "email"
+url  = "mailto:jscho@oss-lab.kr"
+
+# 검색 옵션
+[params.fuseOpts]
+isCaseSensitive = false
+shouldSort = true
+location = 0
+distance = 1000
+threshold = 0.4
+minMatchCharLength = 1
+keys = ["title", "permalink", "summary", "content"]
+
+# 내비게이션 메뉴
+[[menu.main]]
+identifier = "posts"
+name       = "포스트"
+url        = "/posts/"
+weight     = 10
+
+[[menu.main]]
+identifier = "tags"
+name       = "태그"
+url        = "/tags/"
+weight     = 20
+
+[[menu.main]]
+identifier = "archives"
+name       = "아카이브"
+url        = "/archives/"
+weight     = 30
+
+[[menu.main]]
+identifier = "search"
+name       = "검색"
+url        = "/search/"
+weight     = 40
