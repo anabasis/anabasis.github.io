@@ -64,3 +64,4 @@ out/
 .pnp.*
 
 public/
+content/posts/.obsidian/

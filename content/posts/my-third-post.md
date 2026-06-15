@@ -1,11 +1,9 @@
 ---
+title: "세번쨰 자동 배포 글"
 date : '2026-06-14T20:54:12+09:00'
 draft : true
-title: "세번쨰 자동 배포 글"
 category: "개발"
 tags: ["github", "tistory", "markdown"]
-visibility: public
-tags: []
 velog: true
 ---
 
