@@ -23,11 +23,12 @@ function saveIndex(index) {
   fs.writeFileSync(INDEX_PATH, JSON.stringify(index, null, 2) + '\n');
 }
 
-async function graphql(query, variables = {}, cookie = '') {
+async function graphql(query, variables = {}, cookie = '', allowEmptyBody = false) {
   const res = await fetch(GQL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'Origin': 'https://velog.io',
       'Referer': 'https://velog.io/',
       ...(cookie ? { Cookie: cookie } : {}),
@@ -40,6 +41,10 @@ async function graphql(query, variables = {}, cookie = '') {
   console.log(`[DEBUG] HTTP ${res.status}, body length: ${text.length}, content-type: ${res.headers.get('content-type')}`);
 
   if (!text) {
+    if (allowEmptyBody && res.ok) {
+      console.log('[WARN] 빈 응답이지만 HTTP 200 — 성공으로 처리');
+      return null;
+    }
     throw new Error(`빈 응답 수신 (HTTP ${res.status})`);
   }
 
@@ -98,38 +103,50 @@ async function publishPost(filePath, index, accessToken) {
   const existingId = index[slug];
   const cookie = `access_token=${accessToken}`;
 
-  const postInput = {
-    title: fm.title,
-    body: content.trim(),
-    tags,
-    is_markdown: true,
-    is_temp: false,
-    is_private: false,
-    url_slug: slug,
-    thumbnail: null,
-    meta: {},
-    series_id: null,
-  };
+  const body = content.trim();
 
   if (existingId) {
     console.log(`수정 중: ${fm.title} (ID: ${existingId})`);
+    const editInput = {
+      title: fm.title,
+      body,
+      tags,
+      is_markdown: true,
+      is_temp: false,
+      is_private: false,
+      url_slug: slug,
+      thumbnail: null,
+    };
     const result = await graphql(
       `mutation EditPost($id: ID!, $input: EditPostInput!) {
         editPost(id: $id, input: $input) { id url_slug }
       }`,
-      { id: existingId, input: postInput },
+      { id: existingId, input: editInput },
       cookie,
+      true,
     );
-    const post = result.editPost;
-    const url = VELOG_USERNAME ? `https://velog.io/@${VELOG_USERNAME}/${post.url_slug}` : post.url_slug;
+    const urlSlug = result?.editPost?.url_slug ?? slug;
+    const url = VELOG_USERNAME ? `https://velog.io/@${VELOG_USERNAME}/${urlSlug}` : urlSlug;
     console.log(`완료 (수정): ${fm.title} → ${url}`);
   } else {
     console.log(`게시 중: ${fm.title}`);
+    const writeInput = {
+      title: fm.title,
+      body,
+      tags,
+      is_markdown: true,
+      is_temp: false,
+      is_private: false,
+      url_slug: slug,
+      thumbnail: null,
+      meta: {},
+      series_id: null,
+    };
     const result = await graphql(
       `mutation WritePost($input: WritePostInput!) {
         writePost(input: $input) { id url_slug }
       }`,
-      { input: postInput },
+      { input: writeInput },
       cookie,
     );
     const post = result.writePost;
