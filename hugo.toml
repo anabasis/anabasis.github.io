@@ -1,6 +1,6 @@
 baseURL = 'https://anabasis.github.io'
 locale = 'ko-kr'
-title = 'CaptainSnail 기술 블로그'
+title = 'anabasis 기술 블로그'
 theme = "PaperMod"
 #theme = "hugo-theme-stack"
 #theme = "hugo-coder"
@@ -27,7 +27,7 @@ disableScrollToTop = true
 
 # 홈 상단 히어로 섹션
 [params.homeInfoParams]
-Title = "안녕하세요, CaptainSnail입니다 👋"
+Title = "안녕하세요, anabasis 입니다 👋"
 Content = "개발·인프라·오픈소스에 대한 경험과 생각을 씁니다."
 
 # 소셜 아이콘
