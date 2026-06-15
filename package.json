@@ -1,0 +1,11 @@
+{
+  "name": "anabasis-blog-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "publish:velog": "node scripts/publish-velog.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  }
+}

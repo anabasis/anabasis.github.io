@@ -1,0 +1,58 @@
+name: Publish to Velog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/posts/**"
+
+permissions:
+  contents: write
+
+jobs:
+  publish-velog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Detect changed posts
+        run: |
+          BEFORE="${{ github.event.before }}"
+          SHA="${{ github.sha }}"
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            find content/posts -name "*.md" > changed_posts.txt
+          else
+            git diff --name-only "$BEFORE" "$SHA" -- content/posts/ > changed_posts.txt
+          fi
+          echo "--- 변경된 파일 ---"
+          cat changed_posts.txt
+
+      - name: Publish to Velog
+        env:
+          VELOG_REFRESH_TOKEN: ${{ secrets.VELOG_REFRESH_TOKEN }}
+          VELOG_USERNAME: ${{ secrets.VELOG_USERNAME }}
+        run: node scripts/publish-velog.js
+
+      - name: Commit index update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/velog-index.json
+          git diff --staged --quiet || (git commit -m "chore: update velog index [skip ci]" && git push)
