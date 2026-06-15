@@ -37,7 +37,7 @@ jobs:
         run: |
           BEFORE="${{ github.event.before }}"
           SHA="${{ github.sha }}"
-          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
             find content/posts -name "*.md" > changed_posts.txt
           else
             git diff --name-only "$BEFORE" "$SHA" -- content/posts/ > changed_posts.txt
