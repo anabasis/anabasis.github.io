@@ -27,14 +27,30 @@ async function graphql(query, variables = {}, cookie = '') {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Origin': 'https://velog.io',
+      'Referer': 'https://velog.io/',
       ...(cookie ? { Cookie: cookie } : {}),
     },
     body: JSON.stringify({ query, variables }),
   });
 
-  if (!res.ok) throw new Error(`HTTP ${res.status} from Velog`);
+  const text = await res.text();
 
-  const json = await res.json();
+  if (!text) {
+    throw new Error(`빈 응답 수신 (HTTP ${res.status}) — Origin 헤더 또는 토큰을 확인하세요`);
+  }
+
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    throw new Error(`JSON 파싱 실패 (HTTP ${res.status}): ${text.slice(0, 300)}`);
+  }
+
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}: ${JSON.stringify(json)}`);
+  }
+
   if (json.errors?.length) {
     throw new Error(json.errors.map(e => e.message).join(' | '));
   }
