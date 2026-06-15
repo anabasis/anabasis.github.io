@@ -47,6 +47,7 @@ jobs:
 
       - name: Publish to Velog
         env:
+          VELOG_ACCESS_TOKEN: ${{ secrets.VELOG_ACCESS_TOKEN }}
           VELOG_REFRESH_TOKEN: ${{ secrets.VELOG_REFRESH_TOKEN }}
           VELOG_USERNAME: ${{ secrets.VELOG_USERNAME }}
         run: node scripts/publish-velog.js

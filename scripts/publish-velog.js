@@ -6,6 +6,7 @@ const path = require('path');
 const matter = require('gray-matter');
 
 const REFRESH_TOKEN = process.env.VELOG_REFRESH_TOKEN;
+const ACCESS_TOKEN_DIRECT = process.env.VELOG_ACCESS_TOKEN;
 const VELOG_USERNAME = process.env.VELOG_USERNAME ?? '';
 const GQL = 'https://v3.velog.io/graphql';
 const INDEX_PATH = path.resolve('data/velog-index.json');
@@ -36,8 +37,10 @@ async function graphql(query, variables = {}, cookie = '') {
 
   const text = await res.text();
 
+  console.log(`[DEBUG] HTTP ${res.status}, body length: ${text.length}, content-type: ${res.headers.get('content-type')}`);
+
   if (!text) {
-    throw new Error(`빈 응답 수신 (HTTP ${res.status}) — Origin 헤더 또는 토큰을 확인하세요`);
+    throw new Error(`빈 응답 수신 (HTTP ${res.status})`);
   }
 
   let json;
@@ -58,6 +61,12 @@ async function graphql(query, variables = {}, cookie = '') {
 }
 
 async function getAccessToken() {
+  if (ACCESS_TOKEN_DIRECT) {
+    console.log('VELOG_ACCESS_TOKEN 직접 사용');
+    return ACCESS_TOKEN_DIRECT;
+  }
+
+  console.log('refresh_token으로 access_token 갱신 시도...');
   const data = await graphql(
     `mutation { refreshToken { access_token } }`,
     {},
@@ -131,8 +140,8 @@ async function publishPost(filePath, index, accessToken) {
 }
 
 (async () => {
-  if (!REFRESH_TOKEN) {
-    console.error('환경변수 VELOG_REFRESH_TOKEN 누락');
+  if (!ACCESS_TOKEN_DIRECT && !REFRESH_TOKEN) {
+    console.error('VELOG_ACCESS_TOKEN 또는 VELOG_REFRESH_TOKEN 중 하나가 필요합니다');
     process.exit(1);
   }
 
