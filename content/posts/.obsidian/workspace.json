@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "my-third-post.md",
+                "file": "my-second-post.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "my-third-post"
+              "title": "my-second-post"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "my-third-post.md",
+                "file": "my-second-post.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "my-third-post 의 백링크"
+              "title": "my-second-post 의 백링크"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "my-third-post.md",
+                "file": "my-second-post.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "my-third-post 의 나가는 링크"
+              "title": "my-second-post 의 나가는 링크"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "my-third-post.md",
+                "file": "my-second-post.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "my-third-post 의 개요"
+              "title": "my-second-post 의 개요"
             }
           }
         ]
@@ -185,8 +185,8 @@
   },
   "active": "919f9e8667dc60e6",
   "lastOpenFiles": [
-    "my-second-post.md",
+    "my-third-post.md",
     "my-first-post.md",
-    "my-third-post.md"
+    "my-second-post.md"
   ]
 }

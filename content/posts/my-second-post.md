@@ -1,5 +1,5 @@
 ---
-title: 나의 두번째 포스트
+title: '나의 두번째 포스트'
 date: 2026-06-14T17:30:00+09:00
 draft: false
 tags: []
